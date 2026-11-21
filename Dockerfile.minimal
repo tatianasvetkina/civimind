@@ -1,0 +1,30 @@
+FROM eclipse-temurin:17-jdk-alpine AS builder
+
+RUN jlink \
+    --add-modules java.base,java.logging,java.management,java.naming,java.instrument,java.sql,java.xml,java.desktop,java.security.jgss,jdk.unsupported,jdk.crypto.ec \
+    --strip-debug \
+    --no-man-pages \
+    --no-header-files \
+    --compress=2 \
+    --output /custom-jre
+
+FROM alpine:3.20 AS libraries
+
+RUN apk add --no-cache libstdc++
+
+FROM scratch
+
+COPY --from=libraries /lib/ld-musl-x86_64.so.1 /lib/ld-musl-x86_64.so.1
+COPY --from=libraries /usr/lib/libstdc++.so.6.0.32 /usr/lib/libstdc++.so.6
+COPY --from=libraries /usr/lib/libgcc_s.so.1 /usr/lib/libgcc_s.so.1
+
+COPY --from=builder /custom-jre /opt/java
+COPY target/civimind-1.0.0.jar /app/app.jar
+
+ENV JAVA_HOME=/opt/java
+ENV PATH=/opt/java/bin
+
+WORKDIR /app
+EXPOSE 8080
+
+ENTRYPOINT ["/opt/java/bin/java", "-jar", "/app/app.jar"]

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CiviMind — Анализ тональности обращений</title>
+
+    <meta name="description"
+          content="CiviMind — интеллектуальная система анализа тональности текстовых обращений граждан.">
+
+    <link rel="stylesheet" href="/style.css">
+    <script src="/app.js" defer></script>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="container header-content">
+        <a class="logo" href="/" aria-label="CiviMind — главная">
+            <span class="logo-icon">✦</span>
+            <span>CiviMind</span>
+        </a>
+
+        <span class="header-label">AI TEXT ANALYTICS</span>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <div class="eyebrow">ИНТЕЛЛЕКТУАЛЬНЫЙ АНАЛИЗ ТЕКСТА</div>
+
+        <h1>Анализ тональности<br>
+            <span class="gradient-text">обращений граждан</span>
+        </h1>
+
+        <p class="hero-description">
+            CiviMind использует модель машинного обучения
+            для определения эмоциональной окраски текста:
+            положительной, нейтральной или отрицательной.
+        </p>
+    </section>
+
+    <section class="workspace" aria-label="Анализ обращения">
+
+        <div class="panel input-panel">
+            <div class="panel-heading">
+                <div>
+                    <h2>Текст обращения</h2>
+                    <p>Введите текст для анализа тональности</p>
+                </div>
+                <span class="panel-icon" aria-hidden="true">✎</span>
+            </div>
+
+            <label class="visually-hidden" for="appealText">
+                Текст обращения
+            </label>
+
+            <textarea
+                    id="appealText"
+                    maxlength="10000"
+                    placeholder="Например: Благодарю сотрудников за оперативную помощь в решении моего вопроса."
+                    aria-describedby="characterCount"
+            ></textarea>
+
+            <div class="input-footer">
+                <span class="input-hint">
+                    Поддерживается русский язык
+                </span>
+                <span id="characterCount">0 / 10 000</span>
+            </div>
+
+            <div class="examples">
+                <p class="examples-title">Попробуйте пример:</p>
+
+                <div class="example-buttons">
+                    <button type="button"
+                            class="example-button"
+                            data-example="positive">
+                        Положительный
+                    </button>
+
+                    <button type="button"
+                            class="example-button"
+                            data-example="neutral">
+                        Нейтральный
+                    </button>
+
+                    <button type="button"
+                            class="example-button"
+                            data-example="negative">
+                        Отрицательный
+                    </button>
+                </div>
+            </div>
+
+            <button type="button" id="analyzeButton" class="analyze-button">
+                <span aria-hidden="true">✦</span>
+                <span id="buttonText">Анализировать обращение</span>
+            </button>
+
+            <p id="errorMessage" class="error-message"
+               role="alert" hidden></p>
+        </div>
+
+        <div class="panel result-panel">
+            <div class="panel-heading">
+                <div>
+                    <h2>Результат анализа</h2>
+                    <p>Оценка тональности с помощью ИИ</p>
+                </div>
+                <span class="panel-icon" aria-hidden="true">◈</span>
+            </div>
+
+            <div id="emptyResult" class="empty-result">
+                <div class="empty-icon" aria-hidden="true">✧</div>
+                <h3>Ожидаем текст</h3>
+                <p>
+                    Введите обращение и запустите анализ.
+                    Здесь появится результат работы модели.
+                </p>
+            </div>
+
+            <div id="resultContent" class="result-content"
+                 aria-live="polite" hidden>
+
+                <div id="sentimentIcon" class="sentiment-icon"
+                     aria-hidden="true"></div>
+
+                <p class="result-caption">ОПРЕДЕЛЁННАЯ ТОНАЛЬНОСТЬ</p>
+
+                <h3 id="sentimentLabel"></h3>
+
+                <div class="confidence-heading">
+                    <span>Оценка уверенности модели</span>
+                    <strong id="confidenceValue"></strong>
+                </div>
+
+                <div class="confidence-track"
+                     role="progressbar"
+                     aria-label="Оценка уверенности модели"
+                     aria-valuemin="0"
+                     aria-valuemax="100"
+                     aria-valuenow="0"
+                     id="confidenceProgress">
+                    <div id="confidenceBar" class="confidence-bar"></div>
+                </div>
+
+                <p id="resultDescription" class="result-description"></p>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="info-section">
+        <h2>Как работает CiviMind?</h2>
+
+        <div class="info-grid">
+            <article class="info-card">
+                <span class="info-number">01</span>
+                <h3>Введите обращение</h3>
+                <p>Добавьте текст обращения на русском языке.</p>
+            </article>
+
+            <article class="info-card">
+                <span class="info-number">02</span>
+                <h3>Запустите анализ</h3>
+                <p>Модель машинного обучения обработает текст.</p>
+            </article>
+
+            <article class="info-card">
+                <span class="info-number">03</span>
+                <h3>Получите результат</h3>
+                <p>Система покажет тональность и оценку уверенности модели.</p>
+            </article>
+        </div>
+    </section>
+
+    <aside class="disclaimer">
+        <strong>Обратите внимание.</strong>
+        CiviMind — демонстрационная система.
+        Не вводите персональные или конфиденциальные данные.
+        Результат анализа носит справочный характер
+        и может содержать ошибки.
+    </aside>
+
+</main>
+
+<footer class="footer">
+    <div class="container footer-content">
+        <span>© 2026 CiviMind</span>
+        <span>Интеллектуальный анализ текстовых обращений</span>
+    </div>
+</footer>
+
+</body>
+</html>
